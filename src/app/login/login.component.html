@@ -1,0 +1,72 @@
+<div id="main-content" class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {{ greeting }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="connect">WebSocket connection:</label>
+          <button (click)="connect()" class="btn btn-default" type="submit">
+            Connect
+          </button>
+          <button
+            (click)="disconnect()"
+            class="btn btn-default"
+            type="submit"
+            disabled="disabled"
+          >
+            Disconnect
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="name">Deposit</label>
+          <input
+            type="text"
+            [(ngModel)]="name"
+            class="form-control"
+            name="name"
+          />
+          <br />
+        </div>
+        <button
+          (click)="sendDeposit(name)"
+          class="btn btn-default"
+          type="submit"
+        >
+          Send
+        </button>
+      </form>
+    </div>
+    <div class="col-md-6" style="margin-left: 50%">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="withdrawal">Withdrawal</label>
+          <input
+            type="text"
+            [(ngModel)]="withdrawal"
+            class="form-control"
+            name="withdrawal"
+          />
+          <br />
+        </div>
+        <button
+          (click)="sendWithdrawal(withdrawal)"
+          class="btn btn-default"
+          type="submit"
+        >
+          Send
+        </button>
+      </form>
+    </div>
+
+    <p>{{ greeting }}</p>
+  </div>
+</div>
