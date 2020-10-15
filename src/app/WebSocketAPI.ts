@@ -16,6 +16,7 @@ export class WebSocketAPI {
     this.loginComponent = loginComponent;
     this.appComponent = appComponent;
   }
+  //testing
   _connect() {
     console.log('Initialize WebSocket Connection');
     let ws = new SockJS(this.webSocketEndPoint);
