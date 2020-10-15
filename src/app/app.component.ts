@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
-import { runInThisContext } from 'vm';
+
 import { NotificationServiceService } from './services/notification-service.service';
 
 import { WebSocketAPI } from './WebSocketAPI';
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
       
       this.words = [];
       this.notifications.forEach(notif => this.words.unshift(notif.message));
-      
+
     }
     , error => console.log(error));
 
