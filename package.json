@@ -11,10 +11,6 @@
     "postinstall": "ng build --aot --prod",
     "heroku-postbuild": "ng build --prod"
   },
-  "engines": {
-    "node": "12.18.2",
-    "npm": "6.14.5"
-  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.1.2",
@@ -38,10 +34,7 @@
     "sockjs-client": "^1.5.0",
     "stompjs": "^2.3.3",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2",
-    "@angular/cli": "~10.1.7",
-    "@angular/compiler-cli": "~10.1.6",
-    "typescript": "~4.0.2"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1001.2",
@@ -62,6 +55,10 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.2"
+    "typescript": "~4.0.3"
+  },
+  "engines": {
+    "node": "12.18.2",
+    "npm": "6.14.5"
   }
 }
