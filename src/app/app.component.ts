@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
+import { runInThisContext } from 'vm';
+import { NotificationServiceService } from './services/notification-service.service';
 
 import { WebSocketAPI } from './WebSocketAPI';
 @Component({
@@ -16,15 +18,28 @@ export class AppComponent implements OnInit {
   greeting: any;
   name: string;
   notificationCount = 0;
-  AppComponent() {}
-  ngOnInit() {
-    this.webSocketAPI = new WebSocketAPI(null, this);
-    this.connect();
+  public notifications = []
+  public notificationService : NotificationServiceService;
 
-    this.notificationCount = this.words.length;
-
-    console.log('wtf yo');
+  constructor(private notificationServicex : NotificationServiceService) {
+    this.notificationService = notificationServicex;
+    
   }
+
+  ngOnInit() {
+
+    this.notificationService.getAllNotifications().subscribe((data)=> 
+    { this.notifications = data;
+      this.notificationCount = this.notifications.length;
+      this.notifications.forEach(notif => this.words.unshift(notif.message));
+    }
+    , error => console.log(error));
+    //makes api object for this component 
+    this.webSocketAPI = new WebSocketAPI(null, this);
+    //establishes connection with websocket API
+    this.connect();
+  }
+
   connect() {
     this.webSocketAPI._connect();
   }
@@ -32,7 +47,20 @@ export class AppComponent implements OnInit {
   disconnect() {
     this.webSocketAPI._disconnect();
   }
+  getNotifsByUser(uid:number){
+    this.notificationService.getNotifByUserId(uid).subscribe((data)=> 
+    { this.notifications = data;
+      if(this.notifications.length>0){
+        this.notificationCount = this.notifications.length;
+      }else this.notificationCount = 0;
+      
+      this.words = [];
+      this.notifications.forEach(notif => this.words.unshift(notif.message));
+      
+    }
+    , error => console.log(error));
 
+  }
   handleMessage(message) {
     this.greeting = JSON.parse(message);
     this.words.unshift(this.greeting.message);

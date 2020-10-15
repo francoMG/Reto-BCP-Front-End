@@ -11,7 +11,7 @@
         <div class="form-group">
           <label for="connect">WebSocket connection:</label>
           <button (click)="connect()" class="btn btn-default" type="submit">
-            Connect
+            
           </button>
           <button
             (click)="disconnect()"
@@ -19,9 +19,30 @@
             type="submit"
             disabled="disabled"
           >
-            Disconnect
+           
           </button>
         </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="name">User Id:</label>
+          <input
+            type="text"
+            [(ngModel)]="uid"
+            class="form-control"
+            name="uid"
+          />
+          <br />
+        </div>
+        <button
+          (click)="setUserId(uid)"
+          class="btn btn-default"
+          type="submit"
+        >
+          Send
+        </button>
       </form>
     </div>
     <div class="col-md-6">

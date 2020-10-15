@@ -6,12 +6,12 @@ import { AppComponent } from './app.component';
 import { NotificationType } from './models/NotificationType';
 import { Notification } from './models/Notification';
 export class WebSocketAPI {
-  webSocketEndPoint: string = 'http://localhost:8080/ws';
+  webSocketEndPoint: string = 'https://reto-bcp.herokuapp.com/ws';
   topic: string = '/topic/greetings';
   stompClient: any;
   loginComponent: LoginComponent;
   appComponent: AppComponent;
-
+  public uid = 1;
   constructor(loginComponent: LoginComponent, appComponent: AppComponent) {
     this.loginComponent = loginComponent;
     this.appComponent = appComponent;
@@ -21,7 +21,7 @@ export class WebSocketAPI {
     let ws = new SockJS(this.webSocketEndPoint);
 
     this.stompClient = Stomp.over(ws);
-
+    
     const _this = this;
 
     _this.stompClient.connect(
@@ -65,7 +65,7 @@ export class WebSocketAPI {
     notif.deleted = false;
     notif.readNotif = false;
     notif.title = 'title';
-    notif.user_id = 1;
+    notif.user_id = this.uid;
     notif.notificationType = new NotificationType();
     notif.notificationType.id = 1;
 
@@ -79,7 +79,7 @@ export class WebSocketAPI {
     notif.deleted = false;
     notif.readNotif = false;
     notif.title = 'title';
-    notif.user_id = 1;
+    notif.user_id = this.uid;
     notif.notificationType = new NotificationType();
     notif.notificationType.id = 2;
 
@@ -94,13 +94,13 @@ export class WebSocketAPI {
       notif.deleted = false;
       notif.readNotif = false;
       notif.title = 'title';
-      notif.user_id = 1;
+      notif.user_id = this.uid;
       notif.notificationType = new NotificationType();
       notif.notificationType.id = 3;
 
       this.stompClient.send('/app/hello', {}, JSON.stringify(notif));
     }
-  }
+  } 
 
   onMessageReceived(message) {
     console.log('Message Recieved from Server :: ' + message);

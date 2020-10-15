@@ -17,6 +17,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ClickOutsideModule } from 'ng-click-outside';
+import {HttpClientModule} from '@angular/common/http'
+import {NotificationServiceService} from './services/notification-service.service'
 @NgModule({
   declarations: [AppComponent, NavBarComponent, LoginComponent],
   imports: [
@@ -36,8 +38,9 @@ import { ClickOutsideModule } from 'ng-click-outside';
     MatBadgeModule,
     FontAwesomeModule,
     ClickOutsideModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [NotificationServiceService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
