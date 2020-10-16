@@ -6,7 +6,7 @@ nav {
   justify-content: space-around;
   align-items: center;
   min-height: 8vh;
-  background-color: #5d4954;
+  background-color: darkblue;
 }
 .logo h4 {
   margin-top: 10px;
@@ -85,7 +85,7 @@ nav {
   line-height: 500px;
   position: relative;
   top: 50%;
-  background: dodgerblue;
+  background: blue;
 }
 .badge {
   position: absolute;
@@ -93,7 +93,7 @@ nav {
   right: -0px;
   padding: 2px 7px;
   border-radius: 50%;
-  background: dodgerblue;
+  background: red;
   color: white;
 }
 .dateNotif {
