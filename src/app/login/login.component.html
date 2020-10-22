@@ -1,17 +1,23 @@
-<div id="main-content" class="container">
-  <div class="row">
-    <div class="col-md-12">
-      {{ greeting }}
-    </div>
-  </div>
+<h1 style='text-align: center;'>Transacciones a Otra Persona</h1>
+<div class="container">
 
-  <div class="row">
-    <div class="col-md-6">
-      <form class="form-inline">
-        <div class="form-group">
+  
+    <form class="form-inline">
+        
+          
+          <div >
+            <label for="currentID">My ID:</label>
+          <input
+            type="text"
+            [(ngModel)]="currentID"
+            class="form-control"
+            name="currentID"
+          />
+          
+          
           <label for="connect"></label>
-          <button (click)="connect()" class="btn btn-default" type="submit">
-            
+          <button (click)="connect(currentID)" class="btn btn-default" type="submit">
+            connect
           </button>
           <button
             (click)="disconnect()"
@@ -19,56 +25,46 @@
             type="submit"
             disabled="disabled"
           >
-           
           </button>
-        </div>
-      </form>
-    </div>
-    <div class="col-md-6">
-      <form class="form-inline">
-        <div class="form-group">
-          <label for="name">User Id:</label>
+          </div>  
+          
+          
+          <div>
+             <label for="uid">User Id to send:</label>
           <input
             type="text"
             [(ngModel)]="uid"
             class="form-control"
             name="uid"
           />
-          <br />
-        </div>
-        <button
-          (click)="setUserId(uid)"
+         
+          <button
+          (click)="setTargetId(uid)"
           class="btn btn-default"
           type="submit"
         >
           Send
         </button>
-      </form>
-    </div>
-    <div class="col-md-6">
-      <form class="form-inline">
-        <div class="form-group">
-          <label for="name">Deposit</label>
+          </div>
+
+          <div>
+            <label for="deposit">Deposit</label>
           <input
             type="text"
-            [(ngModel)]="name"
+            [(ngModel)]="deposit"
             class="form-control"
-            name="name"
+            name="deposit"
           />
-          <br />
-        </div>
         <button
-          (click)="sendDeposit(name)"
+           (click)="sendDeposit(deposit)"
           class="btn btn-default"
-          type="submit"
-        >
+        type="submit"
+         >
           Send
-        </button>
-      </form>
-    </div>
-    <div class="col-md-6" style="margin-left: 50%">
-      <form class="form-inline">
-        <div class="form-group">
+          </button>
+          </div>
+      
+        <div>
           <label for="withdrawal">Withdrawal</label>
           <input
             type="text"
@@ -76,18 +72,21 @@
             class="form-control"
             name="withdrawal"
           />
-          <br />
+      <button
+              (click)="sendWithdrawal(withdrawal)"
+              class="btn btn-default"
+              type="submit"
+            >
+              Send
+            </button>
         </div>
-        <button
-          (click)="sendWithdrawal(withdrawal)"
-          class="btn btn-default"
-          type="submit"
-        >
-          Send
-        </button>
-      </form>
-    </div>
+      
 
-    <p>{{ greeting }}</p>
-  </div>
+      </form>
+
+    
+    
+
+    
+  
 </div>

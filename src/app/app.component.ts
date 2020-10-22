@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   faBell = faBell;
   faUser = faUser;
   words = ['abraham hackeo tu cuenta', 'camilo te mando un deposito'];
-  webSocketAPI: WebSocketAPI;
+  public webSocketAPI: WebSocketAPI;
   greeting: any;
   name: string;
   notificationCount = 0;
@@ -28,14 +28,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    this.notificationService.getAllNotifications().subscribe((data)=> 
+    this.notificationService.getNotifByUserId(1).subscribe((data)=> 
     { this.notifications = data;
       this.notificationCount = this.notifications.length;
       this.notifications.forEach(notif => this.words.unshift(notif.message));
     }
     , error => console.log(error));
     //makes api object for this component 
-    this.webSocketAPI = new WebSocketAPI(null, this);
+    this.webSocketAPI = new WebSocketAPI(this);
     //establishes connection with websocket API
     this.connect();
   }
@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
     this.webSocketAPI._disconnect();
   }
   getNotifsByUser(uid:number){
+    console.log("TRINBG")
     this.notificationService.getNotifByUserId(uid).subscribe((data)=> 
     { this.notifications = data;
       if(this.notifications.length>0){
@@ -64,7 +65,7 @@ export class AppComponent implements OnInit {
   handleMessage(message) {
     this.greeting = JSON.parse(message);
     this.words.unshift(this.greeting.message);
-
+    
     this.notificationCount += 1;
   }
   sendLoggedIn() {

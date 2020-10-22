@@ -18,9 +18,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ClickOutsideModule } from 'ng-click-outside';
 import {HttpClientModule} from '@angular/common/http'
-import {NotificationServiceService} from './services/notification-service.service'
+import {NotificationServiceService} from './services/notification-service.service';
+import { UserSettingsComponent } from './user-settings/user-settings.component'
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, LoginComponent],
+  declarations: [AppComponent, NavBarComponent, LoginComponent, UserSettingsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

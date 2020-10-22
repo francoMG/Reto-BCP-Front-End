@@ -5,18 +5,24 @@ import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
 import { NotificationType } from './models/NotificationType';
 import { Notification } from './models/Notification';
+
 export class WebSocketAPI {
   webSocketEndPoint: string = 'https://reto-bcp.herokuapp.com/ws';
-  topic: string = '/topic/greetings';
+  //webSocketEndPoint: string = 'http://localhost:8080/ws';
+  topic: string = 'topic/greetings';
   stompClient: any;
-  loginComponent: LoginComponent;
-  appComponent: AppComponent;
-  public uid = 1;
-  constructor(loginComponent: LoginComponent, appComponent: AppComponent) {
-    this.loginComponent = loginComponent;
-    this.appComponent = appComponent;
+
+  public appComponent: AppComponent;
+  public uid:number;
+  public targetID:number;
+  constructor( appComponentz: AppComponent) {
+    
+    this.appComponent = appComponentz;
+    this.uid = 1;
+    this.targetID = 1;
   }
   //testing
+  
   _connect() {
     console.log('Initialize WebSocket Connection');
     let ws = new SockJS(this.webSocketEndPoint);
@@ -25,10 +31,11 @@ export class WebSocketAPI {
     
     const _this = this;
 
+    let id = this.uid;
     _this.stompClient.connect(
       {},
       function (frame) {
-        _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
+        _this.stompClient.subscribe(`/user/${id}/${_this.topic}`, function (sdkEvent) {
           _this.onMessageReceived(sdkEvent);
         });
 
@@ -66,11 +73,13 @@ export class WebSocketAPI {
     notif.deleted = false;
     notif.readNotif = false;
     notif.title = 'title';
-    notif.user_id = this.uid;
+    notif.user_id = this.targetID;
     notif.notificationType = new NotificationType();
     notif.notificationType.id = 1;
 
-    this.stompClient.send('/app/hello', {}, JSON.stringify(notif));
+  
+this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
+    
   }
   _sendDeposit(message) {
     console.log('calling logout api via web socket');
@@ -80,11 +89,11 @@ export class WebSocketAPI {
     notif.deleted = false;
     notif.readNotif = false;
     notif.title = 'title';
-    notif.user_id = this.uid;
+    notif.user_id = this.targetID;
     notif.notificationType = new NotificationType();
     notif.notificationType.id = 2;
 
-    this.stompClient.send('/app/hello', {}, JSON.stringify(notif));
+    this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
   }
   _sendLoggedIn() {
     if (this.appComponent != null) {
@@ -95,19 +104,17 @@ export class WebSocketAPI {
       notif.deleted = false;
       notif.readNotif = false;
       notif.title = 'title';
-      notif.user_id = this.uid;
+      notif.user_id = this.targetID;
       notif.notificationType = new NotificationType();
       notif.notificationType.id = 3;
 
-      this.stompClient.send('/app/hello', {}, JSON.stringify(notif));
+      this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
     }
   } 
 
   onMessageReceived(message) {
     console.log('Message Recieved from Server :: ' + message);
-    if (this.loginComponent != null) {
-      //this.loginComponent.handleMessage(JSON.stringify(message.body));
-    }
+    
     if (this.appComponent != null) {
       this.appComponent.handleMessage(message.body);
     }

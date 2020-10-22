@@ -1,3 +1,13 @@
 .container {
-  margin-top: 20%;
+  height: 80%;
+  background-color: red;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 80%;
+  margin-top: 2%;
+  text-align: center;
+}
+
+.container div {
+  margin-bottom: 3%;
 }

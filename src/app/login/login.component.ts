@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
+
 import { AppComponent } from '../app.component';
 import { WebSocketAPI } from '../WebSocketAPI';
 
@@ -10,36 +9,54 @@ import { WebSocketAPI } from '../WebSocketAPI';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private appComponent:AppComponent) {}
+  appComponent:AppComponent;
+  constructor( appComponentz:AppComponent) {
+    this.appComponent = appComponentz;
+  }
+
   webSocketAPI: WebSocketAPI;
   greeting: any;
-  name: number;
+  deposit: number;
   withdrawal: number;
   uid:number;
+  currentID:number;
 
   ngOnInit() {
-    this.webSocketAPI = new WebSocketAPI(this, null);
-    this.connect();
+    this.webSocketAPI = new WebSocketAPI(this.appComponent);
+    this.connect(1);
     console.log('connecting');
   }
 
-  connect() {
-    this.webSocketAPI._connect();
+  connect(id:number) {
+    
+    this.appComponent.disconnect();
+    this.setUserId(id);
+    this.appComponent.connect();
+    //this.webSocketAPI._connect();
+  
   }
 
   disconnect() {
-    this.webSocketAPI._disconnect();
+    this.appComponent.disconnect();
+    //this.webSocketAPI._disconnect();
   }
 
   sendWithdrawal(text: number) {
-    this.webSocketAPI._sendWithdrawal(text);
+    this.appComponent.webSocketAPI._sendWithdrawal(text);
+    //this.webSocketAPI._sendWithdrawal(text);
   }
   sendDeposit(text: number) {
-    this.webSocketAPI._sendDeposit(text);
+    this.appComponent.webSocketAPI._sendDeposit(text);
+    //this.webSocketAPI._sendDeposit(text);
   }
+
   setUserId(text:number){
-    this.webSocketAPI.uid = text;
+    this.appComponent.webSocketAPI.uid = text;
     this.appComponent.getNotifsByUser(text);
+  }
+  setTargetId(text:number){
+    //this.webSocketAPI.uid = text;
+    this.appComponent.webSocketAPI.targetID = text;
   }
 
   handleMessage(message) {

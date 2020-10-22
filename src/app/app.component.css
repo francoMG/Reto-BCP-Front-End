@@ -1,5 +1,4 @@
 nav {
-  position: fixed;
   top: 0;
   width: 100%;
   display: flex;
@@ -7,6 +6,7 @@ nav {
   align-items: center;
   min-height: 8vh;
   background-color: darkblue;
+  z-index: 9;
 }
 .logo h4 {
   margin-top: 10px;
