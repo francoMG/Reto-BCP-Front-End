@@ -8,37 +8,49 @@
 
   <ul class="nav-links">
     <li class="test">
-      <a (click)="addWord()">Home</a>
+      
     </li>
     <li class="test">
       <a href="#">test</a>
     </li>
   </ul>
 
-  <div class="dropdown" (clickOutside)="onClickedOutside($event)">
-    <button (click)="myFunction()" class="dropbtn">
+  <div class="dropdown" (clickOutside)="onClickedOutside($event)"  >
+
+    <button (click)="myFunction()" class="dropbtn" >
       <fa-icon [icon]="faBell" class="fa-lg"></fa-icon>
     </button>
-    <span class="badge">{{ notificationCount }}</span>
+
+    <span class="badge" >{{ notificationCount }}</span>
+
 
     <div id="myDropdown" class="dropdown-content">
-      <span>Notifications</span>
+
+      <span >Notifications
+         <p routerLink="/user-settings" (click) = "onClickedOutside($event)" style="float: right; cursor: pointer;">Settings</p>
+        </span>
 
       <div class="lowerContainer">
         <a
           *ngFor="let word of words; let i = index"
           id="{{ i }}"
           (click)="hideAlert($event)"
+          style="position: relative;"
         >
           <div
             id="{{ 'alert' + i }}"
             class="circle"
             style="text-align: left"
+            [hidden] = "word.readNotif"
           ></div>
-          <p class="notifText">
-            {{ word }}
+
+          <p  id="{{ i }}" class="notifText">
+            {{ word.message }}
           </p>
-          <p class="dateNotif">1 day ago</p>
+
+          <p  id="{{ i }}" class="dateNotif" >
+            1 day ago
+          </p>
         </a>
       </div>
     </div>

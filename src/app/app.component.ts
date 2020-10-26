@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Notification } from './models/Notification';
 
 import { NotificationServiceService } from './services/notification-service.service';
 
@@ -13,25 +14,28 @@ export class AppComponent implements OnInit {
   title = 'retoBCP';
   faBell = faBell;
   faUser = faUser;
-  words = ['abraham hackeo tu cuenta', 'camilo te mando un deposito'];
+  words = [];
   public webSocketAPI: WebSocketAPI;
   greeting: any;
   name: string;
   notificationCount = 0;
   public notifications = []
-  public notificationService : NotificationServiceService;
+  
 
-  constructor(private notificationServicex : NotificationServiceService) {
-    this.notificationService = notificationServicex;
+  constructor(private notificationService : NotificationServiceService) {
+    
     
   }
 
   ngOnInit() {
 
     this.notificationService.getNotifByUserId(1).subscribe((data)=> 
-    { this.notifications = data;
+    { 
+      this.notifications = data;
       this.notificationCount = this.notifications.length;
-      this.notifications.forEach(notif => this.words.unshift(notif.message));
+      this.notifications.forEach(notif => this.words.unshift(notif));
+      this.sortNotifs(this.words);
+      
     }
     , error => console.log(error));
     //makes api object for this component 
@@ -40,6 +44,12 @@ export class AppComponent implements OnInit {
     this.connect();
   }
 
+  sortNotifs(list){
+    list.sort((a: Notification, b: Notification) => {
+      return b.id- a.id;
+
+  });
+  }
   connect() {
     this.webSocketAPI._connect();
   }
@@ -56,16 +66,16 @@ export class AppComponent implements OnInit {
       }else this.notificationCount = 0;
       
       this.words = [];
-      this.notifications.forEach(notif => this.words.unshift(notif.message));
-      
+      this.notifications.forEach(notif => this.words.unshift(notif));
+      this.sortNotifs(this.words);
     }
     , error => console.log(error));
 
   }
   handleMessage(message) {
     this.greeting = JSON.parse(message);
-    this.words.unshift(this.greeting.message);
-    
+    this.words.unshift(this.greeting);
+    this.sortNotifs(this.words);
     this.notificationCount += 1;
   }
   sendLoggedIn() {
@@ -79,16 +89,19 @@ export class AppComponent implements OnInit {
     var target = event.target || event.srcElement || event.currentTarget;
     var idAttr = target.attributes.id;
     var value = idAttr.nodeValue;
+    
+    this.words[value].readNotif = true;
+    
     var id = 'alert' + value;
-    if (
-      document.getElementById(id).classList.toggle('notShow').valueOf() == false
-    ) {
-      document.getElementById(id).classList.toggle('notShow');
-    }
+
+    this.sendReadNotif( this.words[value]);
+    // if (
+    //   document.getElementById(id).classList.toggle('notShow').valueOf() == false
+    // ) {
+    //   document.getElementById(id).classList.toggle('notShow');
+    // }
   }
-  addWord() {
-    this.words.unshift('IM IN');
-  }
+ 
   onClickedOutside(e: Event) {
     if (
       document.getElementById('myDropdown').classList.toggle('show') === true
@@ -97,5 +110,20 @@ export class AppComponent implements OnInit {
     }
   }
 
+  sendReadNotif(notif:Notification){
+    this.notificationService.changeReadStatus(notif).subscribe(data=>{
+      console.log(data);
+    })
+
+  }
+ 
+  deleteAll(){
+    console.log("Fdsadf");
+    this.notificationService.deleteAll(this.webSocketAPI.uid).subscribe(data=>{
+       this.words = [];
+    this.notificationCount = 0;
+    });
+   
+  }
   // Close the dropdown menu if the user clicks outside of it
 }

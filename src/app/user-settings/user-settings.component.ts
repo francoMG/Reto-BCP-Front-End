@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-user-settings',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserSettingsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private appComponent:AppComponent) { }
 
   ngOnInit(): void {
   }
 
+  deleteAll(){
+    this.appComponent.deleteAll();
+  }
 }

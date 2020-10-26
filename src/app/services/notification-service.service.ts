@@ -18,5 +18,10 @@ export class NotificationServiceService {
   getNotifByUserId(uid:number):Observable<Notification[]>{
     return this.http.get<Notification[]>(`${this.url}${uid}`);
   }
-  
+  changeReadStatus(notif:Notification):Observable<any>{
+    return this.http.put<any>(this.url,notif);
+  }
+  deleteAll(id:number):Observable<any>{
+    return this.http.get<any>(`${this.url}delete/${id}`);
+  }
 }

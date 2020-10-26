@@ -19,9 +19,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ClickOutsideModule } from 'ng-click-outside';
 import {HttpClientModule} from '@angular/common/http'
 import {NotificationServiceService} from './services/notification-service.service';
-import { UserSettingsComponent } from './user-settings/user-settings.component'
+import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { HomeComponent } from './home/home.component'
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, LoginComponent, UserSettingsComponent],
+  declarations: [AppComponent, NavBarComponent, LoginComponent, UserSettingsComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
