@@ -1,1 +1,21 @@
-<p>home works!</p>
+<h1 style='text-align: center;'>Login</h1>
+
+<form class="form-inline">
+    <div >
+      <label for="currentID">My ID:</label>
+    <input
+      type="text"
+      [(ngModel)]="currentId"
+      class="form-control"
+      name="currentID"
+    />
+    
+    
+    <label for="connect"></label>
+    <button (click)="connect(currentId)" class="btn btn-default" type="submit">
+      connect
+    </button>
+
+    </div>  
+</form>
+        

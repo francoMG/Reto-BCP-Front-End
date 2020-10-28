@@ -13,35 +13,34 @@ import { WebSocketAPI } from './WebSocketAPI';
 export class AppComponent implements OnInit {
   title = 'retoBCP';
   faBell = faBell;
-  faUser = faUser;
   words = [];
   public webSocketAPI: WebSocketAPI;
   greeting: any;
-  name: string;
+ 
   notificationCount = 0;
   public notifications = []
-  
+  public loggedIn;
 
   constructor(private notificationService : NotificationServiceService) {
-    
+    this.loggedIn = false;
     
   }
 
   ngOnInit() {
 
-    this.notificationService.getNotifByUserId(1).subscribe((data)=> 
-    { 
-      this.notifications = data;
-      this.notificationCount = this.notifications.length;
-      this.notifications.forEach(notif => this.words.unshift(notif));
-      this.sortNotifs(this.words);
+    // this.notificationService.getNotifByUserId(1).subscribe((data)=> 
+    // { 
+    //   this.notifications = data;
+    //   this.notificationCount = this.notifications.length;
+    //   this.notifications.forEach(notif => this.words.unshift(notif));
+    //   this.sortNotifs(this.words);
       
-    }
-    , error => console.log(error));
+    // }
+    // , error => console.log(error));
     //makes api object for this component 
     this.webSocketAPI = new WebSocketAPI(this);
     //establishes connection with websocket API
-    this.connect();
+    //this.connect();
   }
 
   sortNotifs(list){
@@ -58,7 +57,7 @@ export class AppComponent implements OnInit {
     this.webSocketAPI._disconnect();
   }
   getNotifsByUser(uid:number){
-    console.log("TRINBG")
+    console.log("Getting notifications for user...")
     this.notificationService.getNotifByUserId(uid).subscribe((data)=> 
     { this.notifications = data;
       if(this.notifications.length>0){
@@ -115,6 +114,11 @@ export class AppComponent implements OnInit {
       console.log(data);
     })
 
+  }
+  unHover(){
+    console.log("GSGDS");
+    var but = document.getElementById("notifButton");
+    but.style.transform ="scale(1.19)";
   }
  
   deleteAll(){

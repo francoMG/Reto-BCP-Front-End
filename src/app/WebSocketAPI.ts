@@ -95,6 +95,20 @@ this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
 
     this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
   }
+  _sendDeposit3rd(message) {
+    console.log('calling logout api via web socket');
+    let notif = new Notification();
+
+    notif.amount = message;
+    notif.deleted = false;
+    notif.readNotif = false;
+    notif.title = 'title';
+    notif.user_id = this.targetID;
+    notif.notificationType = new NotificationType();
+    notif.notificationType.id = 4;
+    notif.message = ''+this.uid;
+    this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
+  }
   _sendLoggedIn() {
     if (this.appComponent != null) {
       console.log('calling logout api via web socket');

@@ -1,28 +1,26 @@
 
 <nav>
-  <div class="logo">
+  <div class="logo" >
     <h4>Reto BCP</h4>
   </div>
+ <div [hidden] ="!loggedIn">
+   <a mat-button routerLink="/transacciones" style="color: white" >Transacciones</a>
 
-  <a mat-button routerLink="/transacciones" style="color: white">Transacciones</a>
+ </div>
+  
 
-  <ul class="nav-links">
-    <li class="test">
-      
-    </li>
-    <li class="test">
-      <a href="#">test</a>
-    </li>
-  </ul>
 
   <div class="dropdown" (clickOutside)="onClickedOutside($event)"  >
 
-    <button (click)="myFunction()" class="dropbtn" >
+    <div [hidden] ="!loggedIn">
+      <button id="notifButton" (click)="myFunction()" class="dropbtn"  >
       <fa-icon [icon]="faBell" class="fa-lg"></fa-icon>
     </button>
 
-    <span class="badge" >{{ notificationCount }}</span>
+    <span  id = "testing" class="badge" >{{ notificationCount }}</span>
 
+    </div>
+    
 
     <div id="myDropdown" class="dropdown-content">
 
