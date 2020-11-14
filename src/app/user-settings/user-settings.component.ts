@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
+import { NotificationTypesService } from '../services/notification-types.service';
+import { SubscriptionsService } from '../services/subscriptions.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -8,9 +11,81 @@ import { AppComponent } from '../app.component';
 })
 export class UserSettingsComponent implements OnInit {
 
-  constructor(private appComponent:AppComponent) { }
-
+  public notificationTypes = [];
+  preferences = [];
+  public options = [];
+  public oldOptions = [];
+  constructor(private router:Router,private subscriptionService:SubscriptionsService,private appComponent:AppComponent, private notificationTypeService:NotificationTypesService) { }
+  loaded = false;
   ngOnInit(): void {
+
+  console.log(this.appComponent.webSocketAPI.uid)
+    this.subscriptionService.getByUser(this.appComponent.webSocketAPI.uid).subscribe(data=>{
+      this.preferences = data;
+      
+      this.getNotifTypes();
+      
+      
+    });
+    
+    
+    
+  }
+
+  getNotifTypes(){
+    this.notificationTypeService.getNotificationTypes().subscribe(data=>{
+      this.notificationTypes = data;
+      
+      
+
+
+      this.notificationTypes.forEach(type => {
+        let chosen = false;
+        this.preferences.forEach(element2 => {
+            if(type.id === element2.notificationType_id){
+              chosen = true;
+            }
+        });
+
+        this.options.push({notifType:type,Chosen:chosen})
+
+        
+      });
+      for (let i = 0; i < this.options.length; i++) {
+        let t = this.options[i]
+        this.oldOptions.push( {...t})
+      }
+     this.loaded = true;
+    })
+  }
+  updatePreferences(){
+    console.log("new",this.options)
+    console.log("old ",this.oldOptions)
+
+    for (let i = 0; i < this.options.length; i++) {
+      if(this.options[i].Chosen != this.oldOptions[i].Chosen){
+
+        if(this.options[i].Chosen === false){
+          console.log({user_id:this.appComponent.webSocketAPI.uid,
+            notificationType_id:this.options[i].notifType.id});
+          this.subscriptionService.deletePreference({user_id:this.appComponent.webSocketAPI.uid,
+            notificationType_id:this.options[i].notifType.id}).
+          subscribe(data=>{
+            console.log(data);
+
+          })
+        }else{
+          this.subscriptionService.postPreference({user_id:this.appComponent.webSocketAPI.uid,
+            notificationType_id:this.options[i].notifType.id}).
+            subscribe(data=>{
+              console.log(data);
+            })
+        }
+
+      }
+      
+    }
+    
   }
 
   deleteAll(){

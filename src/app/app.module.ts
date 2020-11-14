@@ -21,6 +21,9 @@ import {HttpClientModule} from '@angular/common/http'
 import {NotificationServiceService} from './services/notification-service.service';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { HomeComponent } from './home/home.component'
+import { TimeagoModule } from 'ngx-timeago';
+import {CookieService} from 'ngx-cookie-service'
+import { SimplebarAngularModule } from 'simplebar-angular';
 @NgModule({
   declarations: [AppComponent, NavBarComponent, LoginComponent, UserSettingsComponent, HomeComponent],
   imports: [
@@ -40,9 +43,11 @@ import { HomeComponent } from './home/home.component'
     MatBadgeModule,
     FontAwesomeModule,
     ClickOutsideModule,
-    HttpClientModule
+    HttpClientModule,
+    TimeagoModule.forRoot() ,
+    SimplebarAngularModule
   ],
-  providers: [NotificationServiceService],
+  providers: [NotificationServiceService,CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

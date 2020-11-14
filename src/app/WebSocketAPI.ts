@@ -20,10 +20,11 @@ export class WebSocketAPI {
     this.appComponent = appComponentz;
     this.uid = 1;
     this.targetID = 1;
+    
   }
   //testing
   
-  _connect() {
+  _connect(logged) {
     console.log('Initialize WebSocket Connection');
     let ws = new SockJS(this.webSocketEndPoint);
 
@@ -39,7 +40,11 @@ export class WebSocketAPI {
           _this.onMessageReceived(sdkEvent);
         });
 
-        _this._sendLoggedIn();
+
+        if(logged ===false){
+          _this._sendLoggedIn();
+        }
+        
 
         //_this.stompClient.reconnect_delay = 2000;
       },
@@ -58,7 +63,7 @@ export class WebSocketAPI {
   errorCallBack(error) {
     console.log('errorCallBack -> ' + error);
     setTimeout(() => {
-      this._connect();
+      this._connect(true);
     }, 5000);
   }
 

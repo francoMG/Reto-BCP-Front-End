@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from '../app.component';
 
 @Component({
@@ -10,9 +11,16 @@ import { AppComponent } from '../app.component';
 export class HomeComponent implements OnInit {
 
   currentId:number;
-  constructor(private router:Router,private appComponent:AppComponent) { }
+  constructor(private cookieService:CookieService,private router:Router,private appComponent:AppComponent) { }
 
   ngOnInit(): void {
+    if(this.cookieService.get("loggedIn") === "true"){
+      this.router.navigate(['transacciones']);
+      
+    }else{
+      
+      this.router.navigate(['']);
+    }
   }
 
 
@@ -21,11 +29,12 @@ export class HomeComponent implements OnInit {
     //this.appComponent.disconnect();
     this.setUserId(id);
     this.setTargetId(id);
-    this.appComponent.connect();
+    this.appComponent.connect(false);
     //this.webSocketAPI._connect();
     this.appComponent.loggedIn = true;
+    this.appComponent.setLoggedInCookie(id);
     this.router.navigate(['transacciones']);
-  
+    
   }
   setTargetId(text:number){
     //this.webSocketAPI.uid = text;

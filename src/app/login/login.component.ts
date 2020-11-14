@@ -9,17 +9,18 @@ import { WebSocketAPI } from '../WebSocketAPI';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+ lmfao :any;
+  constructor(public appComponent:AppComponent) {
  
-  constructor(private appComponent:AppComponent) {
-  
   }
 
-  
+  options = { autoHide: false, scrollbarMinSize: 100 };
+  numbers=[1,2,3,3,3,3,3,3,3,3]
   greeting: any;
   deposit: number;
   withdrawal: number;
   uid:number;
-  currentID:number;
+  amount : number;
 
   ngOnInit() {
     //this.webSocketAPI = new WebSocketAPI(this.appComponent);
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
     
     this.appComponent.disconnect();
     this.setUserId(id);
-    this.appComponent.connect();
+    this.appComponent.connect(false);
     //this.webSocketAPI._connect();
   
   }
@@ -63,8 +64,17 @@ export class LoginComponent implements OnInit {
     //this.webSocketAPI.uid = text;
     this.appComponent.webSocketAPI.targetID = text;
   }
-
+  levels:Array<Object> = [
+    {num: 0, name: "Deposit"},
+    {num: 1, name: "Withdrawal"}
+];
+option = 0;
   handleMessage(message) {
     this.greeting = message;
+  }
+  sendMessage(){
+    
+    
+    this.appComponent.sendMessage(this.option,this.uid,this.amount)
   }
 }

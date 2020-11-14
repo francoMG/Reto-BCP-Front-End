@@ -1,5 +1,8 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
+import { SELECT_PANEL_INDENT_PADDING_X } from '@angular/material/select';
+import { Router } from '@angular/router';
+import { faBell, faUser,faCog } from '@fortawesome/free-solid-svg-icons';
+import { CookieService } from 'ngx-cookie-service';
 import { Notification } from './models/Notification';
 
 import { NotificationServiceService } from './services/notification-service.service';
@@ -11,36 +14,46 @@ import { WebSocketAPI } from './WebSocketAPI';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  options = { autoHide: false, scrollbarMinSize: 100 };
   title = 'retoBCP';
   faBell = faBell;
+  faCog = faCog;
   words = [];
   public webSocketAPI: WebSocketAPI;
   greeting: any;
- 
+  empty:boolean;
   notificationCount = 0;
   public notifications = []
   public loggedIn;
-
-  constructor(private notificationService : NotificationServiceService) {
-    this.loggedIn = false;
+  d8 : Date;
+  num :number;
+  loaded = false;
+  constructor(private router:Router,private notificationService : NotificationServiceService,private cookieService:CookieService) {
     
+ 
+
+    this.empty = false;
   }
 
   ngOnInit() {
 
-    // this.notificationService.getNotifByUserId(1).subscribe((data)=> 
-    // { 
-    //   this.notifications = data;
-    //   this.notificationCount = this.notifications.length;
-    //   this.notifications.forEach(notif => this.words.unshift(notif));
-    //   this.sortNotifs(this.words);
-      
-    // }
-    // , error => console.log(error));
+  
     //makes api object for this component 
     this.webSocketAPI = new WebSocketAPI(this);
-    //establishes connection with websocket API
-    //this.connect();
+
+    if(this.cookieService.get("loggedIn") === "true"){
+      
+      this.loggedIn = true;
+      
+      let id = parseInt(this.cookieService.get("id"));
+      this.webSocketAPI.uid = id;
+      this.getNotifsByUser(id);
+      this.webSocketAPI.targetID = id;
+      this.connect(true);
+    }else{
+      this.loggedIn = false;
+      this.router.navigate(['']);
+    }
   }
 
   sortNotifs(list){
@@ -49,40 +62,80 @@ export class AppComponent implements OnInit {
 
   });
   }
-  connect() {
-    this.webSocketAPI._connect();
+  connect(logged) {
+    this.webSocketAPI._connect(logged);
   }
-
+  setLoggedInCookie(id){
+    this.cookieService.set("loggedIn", "true");
+    this.cookieService.set("id",""+id);
+  }
+  setLoggedOutCookie(){
+    this.cookieService.set("loggedIn", "false");
+    
+  }
   disconnect() {
     this.webSocketAPI._disconnect();
   }
+  
   getNotifsByUser(uid:number){
+    this.notificationCount = 0;
     console.log("Getting notifications for user...")
     this.notificationService.getNotifByUserId(uid).subscribe((data)=> 
     { this.notifications = data;
       if(this.notifications.length>0){
-        this.notificationCount = this.notifications.length;
+        this.countUnreadNotifications();
       }else this.notificationCount = 0;
-      
+      this.loaded = true;
       this.words = [];
-      this.notifications.forEach(notif => this.words.unshift(notif));
+      this.notifications.forEach(notif =>{
+          
+        this.words.unshift(notif)} );
+      
       this.sortNotifs(this.words);
+
+      if(this.words.length === 0 ){
+        this.empty = true;
+        console.log("tra")
+      }
     }
     , error => console.log(error));
-
+    
   }
   handleMessage(message) {
-    this.greeting = JSON.parse(message);
-    this.words.unshift(this.greeting);
+    let msg = JSON.parse(message);
+    console.log(msg)
+    this.words.unshift(msg);
+    console.log(this.words)
     this.sortNotifs(this.words);
     this.notificationCount += 1;
+    console.log(this.words)
+    this.empty = false;
+    this.unHover(1.5);
+  }
+  sendMessage(option, targetId,amount){
+    this.webSocketAPI.targetID = targetId;
+    if(option === 0 ){
+      this.webSocketAPI._sendDeposit3rd(amount);
+    }else{
+      this.webSocketAPI._sendWithdrawal(amount)
+    }
+
   }
   sendLoggedIn() {
     this.webSocketAPI._sendLoggedIn();
   }
+  countUnreadNotifications(){
+    this.notifications.forEach(notif=>{
+      if(notif.readNotif === false){
+        this.notificationCount +=1 ;
+      }
+    })
+    
+  }
 
   myFunction() {
     document.getElementById('myDropdown').classList.toggle('show');
+    document.getElementById('template').classList.toggle("colorTemplate")
   }
   hideAlert(event) {
     var target = event.target || event.srcElement || event.currentTarget;
@@ -91,22 +144,28 @@ export class AppComponent implements OnInit {
     
     this.words[value].readNotif = true;
     
-    var id = 'alert' + value;
 
     this.sendReadNotif( this.words[value]);
-    // if (
-    //   document.getElementById(id).classList.toggle('notShow').valueOf() == false
-    // ) {
-    //   document.getElementById(id).classList.toggle('notShow');
-    // }
+
+    if(this.notificationCount >0){
+       this.notificationCount -= 1;
+    }
+   
+   
   }
  
   onClickedOutside(e: Event) {
     if (
       document.getElementById('myDropdown').classList.toggle('show') === true
     ) {
+      
       document.getElementById('myDropdown').classList.toggle('show');
+      
     }
+    if(document.getElementById('template').classList.toggle("colorTemplate") ===true){
+      document.getElementById('template').classList.toggle("colorTemplate")
+    }
+      
   }
 
   sendReadNotif(notif:Notification){
@@ -115,19 +174,40 @@ export class AppComponent implements OnInit {
     })
 
   }
-  unHover(){
-    console.log("GSGDS");
-    var but = document.getElementById("notifButton");
-    but.style.transform ="scale(1.19)";
+  
+ 
+  async unHover(a){
+   
+    document.getElementById('notifButton').classList.toggle('OMG') 
+    
+    document.getElementById('testing').classList.toggle('OMG3') 
+    await new Promise(r => setTimeout(r, 400));
+     
+     //but.style.transform = `scale(0.5)`;
+     document.getElementById('notifButton').classList.toggle('OMG') 
+   
+     document.getElementById('testing').classList.toggle('OMG3') 
+      
+    
+     
   }
  
   deleteAll(){
-    console.log("Fdsadf");
+    
     this.notificationService.deleteAll(this.webSocketAPI.uid).subscribe(data=>{
        this.words = [];
     this.notificationCount = 0;
     });
    
   }
-  // Close the dropdown menu if the user clicks outside of it
+
+  signOut(){
+    this.disconnect();
+    this.setLoggedOutCookie();
+    this.loggedIn = false;
+    this.words=[];
+    this.empty = false;
+    this.router.navigate(['']); 
+  }
 }
+

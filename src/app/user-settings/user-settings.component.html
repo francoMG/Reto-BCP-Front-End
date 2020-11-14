@@ -1,1 +1,20 @@
-<button (click) = "deleteAll()">Delete all Notifications</button>
+<div class="center">
+
+  <div [hidden] = "loaded" class="loader"></div>
+
+  <button [hidden] = "!loaded" (click) = "deleteAll()">Delete all Notifications</button>
+  
+  <br/>
+
+
+<label style=" width:80px;display: block; margin:auto" *ngFor="let element of options; let i = index">
+    
+        <input  type="checkbox" [(ngModel)] = "element.Chosen">
+    {{element.notifType.type}} 
+   
+   
+    
+</label>
+
+<button [hidden] = "!loaded" (click)="updatePreferences()">submit</button>  
+</div>

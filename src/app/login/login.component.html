@@ -1,36 +1,15 @@
-<h1 style='text-align: center;'>Transacciones a Otra Persona</h1>
+<h1 style='text-align: center;margin-top: 5%;'>Transacciones a Otra Persona</h1>
 <div class="container">
 
   
     <form class="form-inline">
         
           
-          <div [hidden] = "true">
-            <label for="currentID">My ID:</label>
-          <input
-            type="text"
-            [(ngModel)]="currentID"
-            class="form-control"
-            name="currentID"
-          />
-          
-          
-          <label for="connect"></label>
-          <button (click)="connect(currentID)" class="btn btn-default" type="submit">
-            connect
-          </button>
-          <button
-            (click)="disconnect()"
-            class="btn btn-default"
-            type="submit"
-            disabled="disabled"
-          >
-          </button>
-          </div>  
-          
+         
           
           <div>
              <label for="uid">User Id to send:</label>
+             <br/>
           <input
             type="text"
             [(ngModel)]="uid"
@@ -38,52 +17,39 @@
             name="uid"
           />
          
-          <button
-          (click)="setTargetId(uid)"
-          class="btn btn-default"
-          type="submit"
-        >
-          Send
-        </button>
           </div>
 
-          <div>
-            <label for="deposit">Deposit</label>
-          <input
-            type="text"
-            [(ngModel)]="deposit"
-            class="form-control"
-            name="deposit"
-          />
-        <button
-           (click)="sendDeposit(deposit)"
-          class="btn btn-default"
-        type="submit"
-         >
-          Send
-          </button>
-          </div>
-      
         <div>
-          <label for="withdrawal">Withdrawal</label>
+
+          <label for="withdrawal">Amount</label>
+
+          <br/>
           <input
             type="text"
-            [(ngModel)]="withdrawal"
+            [(ngModel)]="amount"
             class="form-control"
             name="withdrawal"
           />
-      <button
-              (click)="sendWithdrawal(withdrawal)"
-              class="btn btn-default"
-              type="submit"
-            >
-              Send
-            </button>
+     
         </div>
       
-
+         <select type="number" [(ngModel)]="option"  [ngModelOptions]="{standalone: true}">
+      <option *ngFor="let level of levels" [ngValue]="level.num">{{level.name}}</option>
+    </select>
+        <div>
+          <button
+          style="margin-top: 2%;"
+          class="button3"
+          type="submit"
+          (click) = "sendMessage()"
+        >
+          Send Transaction
+        </button>
+        </div>
       </form>
 
+      
+      <h1>Eres el usuario {{appComponent.webSocketAPI.uid}}</h1>
     
     
 
