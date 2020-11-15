@@ -33,15 +33,18 @@ nav {
   font-size: 14px;
 }
 
+
 /* Dropdown Button */
 .dropbtn {
   background-color: transparent;
   color: white;
-  padding: 16px;
-  font-size: 16px;
- 
+
+  
+  height: 7vh;
+  width: 7vh;
  border-radius: 50%;
  position: relative; 
+ 
  top:-0.3vh;
   border: none;
   cursor: pointer;
@@ -49,9 +52,19 @@ nav {
 }
 .buttonTemplate{
   background-color: rgb(2, 2, 194);
-  border-radius: 50%;
-  
+
+  color: white;
+
+ 
   height: 7vh;
+  width: 7vh;
+ 
+ position: relative; 
+ border-radius: 50%;
+ top:-0.3vh;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 .buttonTemplate:hover{
   background-color: rgb(1, 1, 241);
@@ -74,15 +87,11 @@ nav {
 .dropbtn:hover {
   transform: scale(1.2);
 }
-.OMG {
+.toggleHandle {
   transform: scale(1.2);
 }
-.OMG2 {
-  transform: scale(1.2);
-}
-.OMG3 {
-  transform: scale(1.2);
-}
+
+
 .dropbtn:hover ~ #idk #testing {
   transform: scale(1.2);
 }
@@ -123,7 +132,7 @@ nav {
   right: -0px;
   padding: 2px 7px;
   border-radius: 50%;
-  background: red;
+  background: rgb(230, 125, 27);
   transition: transform 0.2s;
   color: white;
   cursor: pointer;
@@ -215,6 +224,9 @@ fa-icon:focus{
   outline: none;
  
 }
+.buttonTemplate:hover .icon,.buttonTemplate:hover .badge{
+  transform: scale(1.2);
+}
 .loader {
     
   border: 7px solid #f3f3f3; /* Light grey */
@@ -226,30 +238,109 @@ fa-icon:focus{
   animation: spin 2s linear infinite;
   margin: auto;
 }
-    
+.sideBar a {
+  display: none;
+}
 @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
 }
+.burger{
+  display:none;
+}
 
+.icon{
+  
+  
+  width:fit-content;
+  transition: all 0.2s;
+  top:10px;
+	margin: 0 auto;
+  position: relative;
+  font-size: 3.5vh;
+}
 @media screen and (max-width: 700px) {
-  .dropdown-content {
-    width: 100vw;
+  
+  .signOut{
+    display: none;
+  }
+  .burger{
+    display: inline-block;
+    fill:white;
     position: absolute;
-    margin-left: -90vw;
-    left: 50%;
+    left:0;
+    margin-left: 2vh;
+  }
+  .icon{
+    font-size: 3.5vh;
+  }
+  
+  .dropdown{
+    right: 0;
+    position: absolute;
+    margin-right: 5vh;
+  }
+  .burger:hover{
+    cursor: pointer;
+  }
+  .logo{
+  
+    position: absolute;
+    
+  }
+  
+  .dropdown-content {
+  
+    position: absolute;
+    height: 92vh;
+    width: 100vw;
     box-shadow: none;
     top:7.5vh; 
-    height: 100vh;
+    margin: auto;
+    margin-left: calc(-100vw + 7vh + 5vh);
+    left: 0;
+    overflow-x: hidden;
+    z-index: 1;
     border-radius: 0;/* The width is 100%, when the viewport is 800px or smaller */
   }
- 
+  .sideBar{
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: absolute; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color:rgb(23, 46, 97); /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+    text-align: center;
+  }
+  .sideBar a {
+    padding: 20px 20px 20px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffff;
+    display: block;
+    transition: 0.3s;
+  }
+  .sideBar a:hover {
+    background-color: #f1f1f1;
+    color: blue;
+  }
+  .sideBarActive{
+    
+    width: 100%;
+   
+  }
   .dropdown-content span {
   display: none;}
 
   ngx-simplebar {
-    width: 100%;
-    height: 100vh;
-  
+        
+    overflow-x: hidden;
+    max-width: 100vw;
+    height: 92vh;
+    
   }
 }

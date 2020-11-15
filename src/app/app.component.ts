@@ -103,14 +103,14 @@ export class AppComponent implements OnInit {
   }
   handleMessage(message) {
     let msg = JSON.parse(message);
-    console.log(msg)
+    
     this.words.unshift(msg);
-    console.log(this.words)
+ 
     this.sortNotifs(this.words);
     this.notificationCount += 1;
-    console.log(this.words)
+    
     this.empty = false;
-    this.unHover(1.5);
+    this.unHover();
   }
   sendMessage(option, targetId,amount){
     this.webSocketAPI.targetID = targetId;
@@ -136,6 +136,10 @@ export class AppComponent implements OnInit {
   myFunction() {
     document.getElementById('myDropdown').classList.toggle('show');
     document.getElementById('template').classList.toggle("colorTemplate")
+  }
+  sideBar() {
+    document.getElementById('sideBar').classList.toggle('sideBarActive');
+    
   }
   hideAlert(event) {
     var target = event.target || event.srcElement || event.currentTarget;
@@ -176,17 +180,17 @@ export class AppComponent implements OnInit {
   }
   
  
-  async unHover(a){
+  async unHover(){
    
-    document.getElementById('notifButton').classList.toggle('OMG') 
+    document.getElementById('icono').classList.toggle('toggleHandle') 
     
-    document.getElementById('testing').classList.toggle('OMG3') 
-    await new Promise(r => setTimeout(r, 400));
+    document.getElementById('testing').classList.toggle('toggleHandle') 
+    await new Promise(r => setTimeout(r, 600));
      
      //but.style.transform = `scale(0.5)`;
-     document.getElementById('notifButton').classList.toggle('OMG') 
+     document.getElementById('icono').classList.toggle('toggleHandle') 
    
-     document.getElementById('testing').classList.toggle('OMG3') 
+     document.getElementById('testing').classList.toggle('toggleHandle') 
       
     
      
@@ -202,6 +206,8 @@ export class AppComponent implements OnInit {
   }
 
   signOut(){
+    this.sideBar();
+    
     this.disconnect();
     this.setLoggedOutCookie();
     this.loggedIn = false;
