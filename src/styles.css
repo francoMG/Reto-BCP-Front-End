@@ -1,4 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: flexo;
+  src: url(assets/font/Flexo-Demi.otf) format("opentype");
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+  --primary: #002a8d;
+  --secondary: #ff7800;
+  --background: #f2f4f8;
+  --white: #fff;
+  --black: #202e44;
+  --off: #737e8e;
+  --border-radius: 8px;
+  --default-box-shadow: 0 5px 20px 0 var(--off);
+}
+
+html,
+body {
+  height: 100%;
+  font-size: 16px;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--black);
+  font-family: flexo;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
