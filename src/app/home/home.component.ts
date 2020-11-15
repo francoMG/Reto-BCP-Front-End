@@ -6,26 +6,25 @@ import { AppComponent } from '../app.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-
-  currentId:number;
-  constructor(private cookieService:CookieService,private router:Router,private appComponent:AppComponent) { }
+  currentId: number;
+  constructor(
+    private cookieService: CookieService,
+    private router: Router,
+    private appComponent: AppComponent
+  ) {}
 
   ngOnInit(): void {
-    if(this.cookieService.get("loggedIn") === "true"){
+    if (this.cookieService.get('loggedIn') === 'true') {
       this.router.navigate(['transacciones']);
-      
-    }else{
-      
+    } else {
       this.router.navigate(['']);
     }
   }
 
-
-  connect(id:number) {
-    
+  connect(id: number) {
     //this.appComponent.disconnect();
     this.setUserId(id);
     this.setTargetId(id);
@@ -34,14 +33,12 @@ export class HomeComponent implements OnInit {
     this.appComponent.loggedIn = true;
     this.appComponent.setLoggedInCookie(id);
     this.router.navigate(['transacciones']);
-    
   }
-  setTargetId(text:number){
+  setTargetId(text: number) {
     //this.webSocketAPI.uid = text;
     this.appComponent.webSocketAPI.targetID = text;
   }
-  setUserId(text:number){
-    
+  setUserId(text: number) {
     this.appComponent.webSocketAPI.uid = text;
     this.appComponent.getNotifsByUser(text);
   }

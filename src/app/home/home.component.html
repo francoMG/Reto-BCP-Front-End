@@ -1,23 +1,21 @@
-<h1 style='font-size: 50px ;text-align: center;margin-top: 5%;'>Login</h1>
-
-<form class="form-inline" style="margin-top: 10%;">
-    <div class = "login">
+<div class="container">
+  <div class="card-login">
+    <h1 class="title">Login</h1>
+    <div class="id-credentials">
       <label for="currentID">My ID:</label>
-      <br/>
-    <input
-      type="text"
-      [(ngModel)]="currentId"
-      class="form-control"
-      name="currentID"
-    />
+      <br />
+      <input
+        type="text"
+        [(ngModel)]="currentId"
+        class="form-control"
+        name="currentID"
+      />
+    </div>
+    <div class="conect-button-container">
+      <label for="connect"></label>
+      <button (click)="connect(currentId)" class="button3" type="submit">
+        Connect
+      </button>
+    </div>
   </div>
-    <div class="login">
-    <br/>
-    <label for="connect"></label>
-    <button (click)="connect(currentId)" class="button3" type="submit">
-      Connect
-    </button>
-
-    </div>  
-</form>
-        
+</div>
