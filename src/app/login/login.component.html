@@ -1,58 +1,40 @@
-<h1 style='text-align: center;margin-top: 5%;'>Transacciones a Otra Persona</h1>
 <div class="container">
+  <h1 style="text-align: center; margin-top: 5%">
+    Transacciones a Otra Persona
+  </h1>
+  <div class="card">
+    <h1>Eres el usuario {{ appComponent.webSocketAPI.uid }}</h1>
 
-  
-    <form class="form-inline">
-        
-          
-         
-          
-          <div>
-             <label for="uid">User Id to send:</label>
-             <br/>
-          <input
-            type="text"
-            [(ngModel)]="uid"
-            class="form-control"
-            name="uid"
-          />
-         
-          </div>
+    <label for="uid">User Id to send:</label>
+    <input type="text" [(ngModel)]="uid" class="form-control" name="uid" />
 
-        <div>
+    <label for="withdrawal">Amount</label>
 
-          <label for="withdrawal">Amount</label>
+    <input
+      type="text"
+      [(ngModel)]="amount"
+      class="form-control"
+      name="withdrawal"
+    />
 
-          <br/>
-          <input
-            type="text"
-            [(ngModel)]="amount"
-            class="form-control"
-            name="withdrawal"
-          />
-     
-        </div>
-      
-         <select type="number" [(ngModel)]="option"  [ngModelOptions]="{standalone: true}">
-      <option *ngFor="let level of levels" [ngValue]="level.num">{{level.name}}</option>
+    <label for="withdrawal">Type</label>
+    <select
+      class="levels"
+      type="number"
+      [(ngModel)]="option"
+      [ngModelOptions]="{ standalone: true }"
+    >
+      <option *ngFor="let level of levels" [ngValue]="level.num">
+        {{ level.name }}
+      </option>
     </select>
-        <div>
-          <button
-          style="margin-top: 2%;"
-          class="button3"
-          type="submit"
-          (click) = "sendMessage()"
-        >
-          Send Transaction
-        </button>
-        </div>
-      </form>
-
-      
-      <h1>Eres el usuario {{appComponent.webSocketAPI.uid}}</h1>
-    
-    
-
-    
-  
+    <button
+      style="margin-top: 2%"
+      class="button3"
+      type="submit"
+      (click)="sendMessage()"
+    >
+      Send Transaction
+    </button>
+  </div>
 </div>

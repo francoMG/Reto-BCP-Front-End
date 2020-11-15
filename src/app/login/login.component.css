@@ -1,44 +1,53 @@
 .container {
-
-  
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 80%;
-  margin-top: 5%;
-  text-align: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.container div {
-  margin-bottom: 3%;
-}
-
-input{
-  border: 1px solid #000;
-  width: 200px;
+.card {
+  position: relative;
+  color: var(--primary);
+  background: var(--white);
+  margin-top: 40px;
   padding: 20px;
-      font-size: 20px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: var(--default-box-shadow);
 }
-.button3{
-  
-display:inline-block;
-padding:0.3em 1.2em;
-margin:0 0.3em 0.3em 0;
-border-radius:2em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color:#FFFFFF;
-background-color:#4eb5f1;
-text-align:center;
-transition: all 0.2s;
-border: none;
 
+input {
+  border: 1px solid var(--off);
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 20px;
 }
-  
-  .button3:hover{
-  background-color:#4095c6;
-  }
-  
 
+.button3 {
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-left: 50%;
+  padding: 0.3em 1.2em;
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 300;
+  color: #ffffff;
+  background-color: var(--secondary);
+  text-align: center;
+  transition: all 0.2s;
+  border: none;
+}
+
+.button3:hover {
+  opacity: 0.8;
+}
+
+.levels {
+  width: 100%;
+  border: 1px solid var(--off);
+  padding: 6px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
