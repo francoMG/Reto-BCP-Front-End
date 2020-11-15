@@ -8,6 +8,7 @@
   --secondary: #ff7800;
   --background: #f2f4f8;
   --white: #fff;
+  --error: #a81e2c;
   --black: #202e44;
   --off: #737e8e;
   --border-radius: 8px;
@@ -36,4 +37,18 @@ body {
 *::after {
   box-sizing: border-box;
   margin: 0;
+}
+
+button {
+  border-radius: var(--border-radius);
+  background: var(--secondary);
+  color: var(--white);
+  border: 0;
+  transition: all 0.8s ease-out;
+  padding: 6px 14px;
+  min-height: 30px;
+}
+
+button:hover {
+  opacity: 0.8;
 }

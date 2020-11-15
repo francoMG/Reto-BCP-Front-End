@@ -1,20 +1,17 @@
-<div class="center">
+<div [hidden]="loaded === true" class="loader"></div>
 
-  <div [hidden] = "loaded" class="loader"></div>
-
-  <button [hidden] = "!loaded" (click) = "deleteAll()">Delete all Notifications</button>
-  
-  <br/>
-
-
-<label style=" width:80px;display: block; margin:auto" *ngFor="let element of options; let i = index">
-    
-        <input  type="checkbox" [(ngModel)] = "element.Chosen">
-    {{element.notifType.type}} 
-   
-   
-    
-</label>
-
-<button [hidden] = "!loaded" (click)="updatePreferences()">submit</button>  
+<div [hidden]="loaded === false" class="container">
+  <h1>User settings</h1>
+  <div class="card">
+    <div class="settings" *ngFor="let element of options; let i = index">
+      {{ element.notifType.type }}
+      <input type="checkbox" [(ngModel)]="element.Chosen" />
+    </div>
+    <div class="buttons">
+      <button (click)="deleteAll()" class="delete-all">
+        Delete all notifications
+      </button>
+      <button (click)="updatePreferences()">Save</button>
+    </div>
+  </div>
 </div>
