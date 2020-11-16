@@ -11,8 +11,9 @@
   --error: #a81e2c;
   --black: #202e44;
   --off: #737e8e;
+  --shadow: #acacac;
   --border-radius: 8px;
-  --default-box-shadow: 0 5px 20px 0 var(--off);
+  --default-box-shadow: 0 5px 20px 0 var(--shadow);
 }
 
 html,

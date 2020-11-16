@@ -66,6 +66,7 @@ input:checked[type="checkbox"]:before {
   height: 120px;
   animation: spin 2s linear infinite;
   margin: auto;
+  margin-top: 200px;
 }
 
 .delete-all {

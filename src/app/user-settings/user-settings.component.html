@@ -1,6 +1,6 @@
-<div [hidden]="loaded === true" class="loader"></div>
+<div *ngIf="!loaded" class="loader"></div>
 
-<div [hidden]="loaded === false" class="container">
+<div *ngIf="loaded" class="container">
   <h1>User settings</h1>
   <div class="card">
     <div class="settings" *ngFor="let element of options; let i = index">

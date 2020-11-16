@@ -30,11 +30,8 @@
       <div class="icon" id="icono">
         <fa-icon [icon]="faBell" class="fa bell"></fa-icon>
       </div>
-
       <div id="idk" [hidden]="notificationCount === 0">
-        <span id="testing" class="badge" (click)="myFunction()">{{
-          notificationCount
-        }}</span>
+        <span id="testing" class="badge">{{ notificationCount }}</span>
       </div>
     </div>
 
@@ -51,7 +48,6 @@
             cursor: pointer;
           "
           [icon]="faCog"
-          class="fa-lg"
         ></fa-icon>
       </span>
 
@@ -103,7 +99,7 @@
   </div>
 </nav>
 <div id="sideBar" class="sideBar">
-  <a routerLink="/login" (click)="sideBar()">Transacciones</a>
+  <a routerLink="/transacciones" (click)="sideBar()">Transacciones</a>
   <a routerLink="/user-settings" (click)="sideBar()"
     >Ajustes de Notificaciones</a
   >
