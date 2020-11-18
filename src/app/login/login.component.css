@@ -38,6 +38,7 @@ input {
   text-align: center;
   transition: all 0.2s;
   border: none;
+  outline: none;
 }
 
 .button3:hover {

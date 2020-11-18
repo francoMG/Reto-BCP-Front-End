@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Notification } from './models/Notification';
 
 import { NotificationServiceService } from './services/notification-service.service';
+import { UsersService } from './services/users.service';
 
 import { WebSocketAPI } from './WebSocketAPI';
 @Component({
@@ -30,8 +31,9 @@ export class AppComponent implements OnInit {
   loaded = false;
   constructor(
     private router: Router,
-    private notificationService: NotificationServiceService,
-    private cookieService: CookieService
+    public notificationService: NotificationServiceService,
+    private cookieService: CookieService,
+    private userService: UsersService
   ) {
     this.empty = false;
   }
@@ -42,7 +44,7 @@ export class AppComponent implements OnInit {
 
     if (this.cookieService.get('loggedIn') === 'true') {
       this.loggedIn = true;
-
+      this.router.navigate(['']);
       let id = parseInt(this.cookieService.get('id'));
       this.webSocketAPI.uid = id;
       this.getNotifsByUser(id);
@@ -181,23 +183,28 @@ export class AppComponent implements OnInit {
     document.getElementById('testing').classList.toggle('toggleHandle');
   }
 
-  deleteAll() {
-    this.notificationService
-      .deleteAll(this.webSocketAPI.uid)
-      .subscribe((data) => {
-        this.words = [];
-        this.notificationCount = 0;
-      });
-  }
-
   signOut() {
-    this.sideBar();
+    console.log(this.webSocketAPI.uid);
+    this.userService
+      .logout({
+        username: this.webSocketAPI.uid.toString(),
+        password: '',
+        loggedIn: false,
+      })
+      .subscribe(
+        (data) => {
+          this.sideBar();
 
-    this.disconnect();
-    this.setLoggedOutCookie();
-    this.loggedIn = false;
-    this.words = [];
-    this.empty = false;
-    this.router.navigate(['']);
+          this.disconnect();
+          this.setLoggedOutCookie();
+          this.loggedIn = false;
+          this.words = [];
+          this.empty = false;
+          this.router.navigate(['']);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 }

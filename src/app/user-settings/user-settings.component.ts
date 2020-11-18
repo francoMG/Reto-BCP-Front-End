@@ -53,10 +53,8 @@ export class UserSettingsComponent implements OnInit {
       this.loaded = true;
     });
   }
-  updatePreferences() {
-    console.log('new', this.options);
-    console.log('old ', this.oldOptions);
 
+  updatePreferences() {
     for (let i = 0; i < this.options.length; i++) {
       if (this.options[i].Chosen != this.oldOptions[i].Chosen) {
         if (this.options[i].Chosen === false) {
@@ -84,9 +82,28 @@ export class UserSettingsComponent implements OnInit {
         }
       }
     }
+    this.myFunction('Settings saved!');
   }
 
   deleteAll() {
-    this.appComponent.deleteAll();
+    this.appComponent.notificationService
+      .deleteAll(this.appComponent.webSocketAPI.uid)
+      .subscribe((data) => {
+        this.appComponent.words = [];
+        this.appComponent.notificationCount = 0;
+        this.myFunction('All notifications deleted!');
+        this.appComponent.empty = true;
+      });
+  }
+  msg = '';
+  myFunction(m) {
+    this.msg = m;
+    var x = document.getElementById('snackbar');
+
+    x.className = 'show';
+
+    setTimeout(function () {
+      x.className = x.className.replace('show', '');
+    }, 3000);
   }
 }
