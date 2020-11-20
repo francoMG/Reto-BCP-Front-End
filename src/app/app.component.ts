@@ -111,10 +111,15 @@ export class AppComponent implements OnInit {
     this.empty = false;
     this.unHover();
   }
-  sendMessage(option, targetId, amount) {
+
+  sendMessage(option, targetId: number, amount) {
     this.webSocketAPI.targetID = targetId;
+
     if (option === 0) {
+      console.log('huh');
       this.webSocketAPI._sendDeposit3rd(amount);
+    } else if (option === 3) {
+      this.webSocketAPI._sendDeposit(amount);
     } else {
       this.webSocketAPI._sendWithdrawal(amount);
     }

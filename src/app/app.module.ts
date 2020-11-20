@@ -24,8 +24,9 @@ import { HomeComponent } from './home/home.component'
 import { TimeagoModule } from 'ngx-timeago';
 import {CookieService} from 'ngx-cookie-service'
 import { SimplebarAngularModule } from 'simplebar-angular';
+import { PropiasTransaccionesComponent } from './propias-transacciones/propias-transacciones.component';
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, LoginComponent, UserSettingsComponent, HomeComponent],
+  declarations: [AppComponent, NavBarComponent, LoginComponent, UserSettingsComponent, HomeComponent, PropiasTransaccionesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

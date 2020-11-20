@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   connect(id: number) {
     //this.appComponent.disconnect();
     this.userService
-      .login({ username: id.toString(), password: '', loggedIn: false })
+      .login({ username: id.toString(), password: '', loggedIn: null })
       .subscribe(
         (data) => {
           console.log('???');

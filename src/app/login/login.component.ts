@@ -43,10 +43,13 @@ export class LoginComponent implements OnInit {
     //this.webSocketAPI._sendWithdrawal(text);
   }
   sendDeposit(text: number) {
+    console.log('wtd');
+
     if (
       this.appComponent.webSocketAPI.uid ===
       this.appComponent.webSocketAPI.targetID
     ) {
+      console.log('huh');
       this.appComponent.webSocketAPI._sendDeposit(text);
     } else {
       this.appComponent.webSocketAPI._sendDeposit3rd(text);
@@ -72,6 +75,10 @@ export class LoginComponent implements OnInit {
     this.greeting = message;
   }
   sendMessage() {
+    if (this.uid == this.appComponent.webSocketAPI.uid) {
+      this.option = 3;
+    }
     this.appComponent.sendMessage(this.option, this.uid, this.amount);
+    this.option = 0;
   }
 }

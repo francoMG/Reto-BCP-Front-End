@@ -39,6 +39,7 @@ nav {
   border: none;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: 0 2px 4px #0008;
 }
 .buttonTemplate:hover {
   transform: scale(1.1);
@@ -322,7 +323,7 @@ fa-icon:focus {
   ngx-simplebar {
     overflow-x: hidden;
     max-width: 100vw;
-    height: 92vh;
+    max-height: 92vh;
   }
   .notifText {
     font-size: 15px;

@@ -13,38 +13,36 @@ export class WebSocketAPI {
   stompClient: any;
 
   public appComponent: AppComponent;
-  public uid:number;
-  public targetID:number;
-  constructor( appComponentz: AppComponent) {
-    
+  public uid: number;
+  public targetID: number;
+  constructor(appComponentz: AppComponent) {
     this.appComponent = appComponentz;
     this.uid = 1;
     this.targetID = 1;
-    
   }
   //testing
-  
+
   _connect(logged) {
     console.log('Initialize WebSocket Connection');
     let ws = new SockJS(this.webSocketEndPoint);
 
     this.stompClient = Stomp.over(ws);
-    
+
     const _this = this;
 
     let id = this.uid;
     _this.stompClient.connect(
       {},
       function (frame) {
-        _this.stompClient.subscribe(`/user/${id}/${_this.topic}`, function (sdkEvent) {
+        _this.stompClient.subscribe(`/user/${id}/${_this.topic}`, function (
+          sdkEvent
+        ) {
           _this.onMessageReceived(sdkEvent);
         });
 
-
-        if(logged ===false){
+        if (logged === false) {
           _this._sendLoggedIn();
         }
-        
 
         //_this.stompClient.reconnect_delay = 2000;
       },
@@ -82,9 +80,7 @@ export class WebSocketAPI {
     notif.notificationType = new NotificationType();
     notif.notificationType.id = 1;
 
-  
-this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
-    
+    this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
   }
   _sendDeposit(message) {
     console.log('calling logout api via web socket');
@@ -111,7 +107,7 @@ this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
     notif.user_id = this.targetID;
     notif.notificationType = new NotificationType();
     notif.notificationType.id = 4;
-    notif.message = ''+this.uid;
+    notif.message = '' + this.uid;
     this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
   }
   _sendLoggedIn() {
@@ -129,11 +125,11 @@ this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
 
       this.stompClient.send('/app/notification', {}, JSON.stringify(notif));
     }
-  } 
+  }
 
   onMessageReceived(message) {
     console.log('Message Recieved from Server :: ' + message);
-    
+
     if (this.appComponent != null) {
       this.appComponent.handleMessage(message.body);
     }
